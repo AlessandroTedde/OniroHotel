@@ -1,0 +1,74 @@
+﻿@model OniroHotel.Models.Reservations
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<link rel="stylesheet" href="~/Content/Rooms.min.css">
+
+
+<div class="custom-form">
+<h2 class="text-center">Dettagli</h2>
+    <dl class="dl-horizontal">
+        <dt class="h4 fw-semibold mb-1">
+            @Html.DisplayNameFor(model => model.Users.Username)
+        </dt>
+
+        <dd class="fw-semibold fs-5 mb-3">
+            @Html.DisplayFor(model => model.Users.Username)
+        </dd>
+
+        <dt class="h4 fw-semibold mb-1">
+            @Html.DisplayNameFor(model => model.InDate)
+        </dt>
+
+        <dd class="fw-semibold fs-5 mb-3">
+            @Html.DisplayFor(model => model.InDate)
+        </dd>
+
+        <dt class="h4 fw-semibold mb-1">
+            @Html.DisplayNameFor(model => model.OutDate)
+        </dt>
+
+        <dd class="fw-semibold fs-5 mb-3">
+            @Html.DisplayFor(model => model.OutDate)
+        </dd>
+
+        <dt class="h4 fw-semibold mb-1">
+            @Html.DisplayNameFor(model => model.Treatment)
+        </dt>
+
+        <dd class="fw-semibold fs-5 mb-3">
+            @Html.DisplayFor(model => model.Treatment)
+        </dd>
+
+        <dt class="h4 fw-semibold mb-1">
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd class="fw-semibold fs-5 mb-3">
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+        <dt class="h4 fw-semibold mb-1">
+            @Html.DisplayNameFor(model => model.IsValid)
+        </dt>
+
+        <dd class="fw-semibold fs-5 mb-3">
+            @Html.DisplayFor(model => model.IsValid)
+        </dd>
+
+        <dt class="h4 fw-semibold mb-1">
+            @Html.DisplayNameFor(model => model.Guests)
+        </dt>
+
+        <dd class="fw-semibold fs-5 mb-3">
+            @Html.DisplayFor(model => model.Guests)
+        </dd>
+
+    </dl>
+</div>
+<div class="d-flex justify-content-center mt-2 mb-4">
+    @Html.ActionLink("Modifica", "Edit", new { id = Model.ResID }, new { @class = "link custom-btn me-2 px-2" })
+    @Html.ActionLink("Torna alla lista", "Index", null, new { @class = "link custom-btn px-2" })
+</div>

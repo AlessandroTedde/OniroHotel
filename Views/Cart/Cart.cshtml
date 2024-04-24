@@ -1,0 +1,89 @@
+﻿@model OniroHotel.Models.CartViewModel
+@{
+    ViewBag.Title = "Cart";
+}
+<link rel="stylesheet" href="~/Content/Cart.min.css">
+
+<h2 class="text-center">La tua prenotazione</h2>
+
+@if (Model != null && Model.Room != null)
+{
+    <div class="row justify-content-center">
+        <div class="wrapper col-md-4">
+            <h1>@Model.Room.RoomName</h1>
+            <img src="@Model.Room.RoomImg" class="image" />
+            <div class="details">
+                @*<h1><em>Boracay Island</em></h1>*@
+                <h2>@Model.Room.RoomPrice€ / notte</h2>
+                @*<p>3 Days - 2 Nights</p>*@
+            </div>
+        </div>
+    </div>
+}
+
+<div class="wrapper-extra mt-4">
+    <div class="custom-form">
+        <div class="d-flex justify-content-center">
+            <p class="fs-4 d-inline-block">Seleziona trattamento</p>
+            @Html.DropDownList("treatment", new List<SelectListItem>
+            {
+            new SelectListItem { Text = "BB", Value = "BB"},
+            new SelectListItem { Text = "HB", Value = "HB"},
+            new SelectListItem { Text = "FB", Value = "FB"}
+            }, "Seleziona", new { @class = "custom-input ms-2" })
+        </div>
+
+        <div class="d-flex justify-content-center mt-3">
+            <p class="fs-4 d-inline-block">Numero ospiti</p>
+            @Html.DropDownList("guests", new List<SelectListItem>
+            {
+            new SelectListItem { Text = "1", Value = "1"},
+            new SelectListItem { Text = "2", Value = "2"},
+            new SelectListItem { Text = "3", Value = "3"},
+            new SelectListItem { Text = "4", Value = "4"}
+            }, "Seleziona", new { @class = "custom-input ms-2" })
+        </div>
+    </div>
+</div>
+
+<h2 class="text-center mt-3">Extra disponibili</h2>
+<div class="row row-cols-xxl-5 row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-1 my-2 justify-content-evenly">
+    @foreach (var extra in Model.Extras)
+    {
+        <div class="card col mx-1 mb-3">
+            <div class="card-body">
+                <div class="card-img">
+                    <img src="@extra.ExtraImg" />
+                </div>
+                <div class="card-title">@extra.ExtraName</div>
+            </div>
+            <hr class="card-divider">
+            <div class="card-footer">
+                <div class="card-price"><span>€</span> @extra.ExtraPrice</div>
+                <button class="card-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="m397.78 316h-205.13a15 15 0 0 1 -14.65-11.67l-34.54-150.48a15 15 0 0 1 14.62-18.36h274.27a15 15 0 0 1 14.65 18.36l-34.6 150.48a15 15 0 0 1 -14.62 11.67zm-193.19-30h181.25l27.67-120.48h-236.6z"></path><path d="m222 450a57.48 57.48 0 1 1 57.48-57.48 57.54 57.54 0 0 1 -57.48 57.48zm0-84.95a27.48 27.48 0 1 0 27.48 27.47 27.5 27.5 0 0 0 -27.48-27.47z"></path><path d="m368.42 450a57.48 57.48 0 1 1 57.48-57.48 57.54 57.54 0 0 1 -57.48 57.48zm0-84.95a27.48 27.48 0 1 0 27.48 27.47 27.5 27.5 0 0 0 -27.48-27.47z"></path><path d="m158.08 165.49a15 15 0 0 1 -14.23-10.26l-25.71-77.23h-47.44a15 15 0 1 1 0-30h58.3a15 15 0 0 1 14.23 10.26l29.13 87.49a15 15 0 0 1 -14.23 19.74z"></path></svg>
+                </button>
+            </div>
+        </div>
+    }
+</div>
+
+
+@using (Html.BeginForm("Confirm", "Cart", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    if (Session["InDate"] != null & Session["OutDate"] != null)
+    {
+        @Html.Hidden("inDate", ((DateTime)Session["InDate"]).ToString("yyyy-MM-dd"))
+        @Html.Hidden("outDate", ((DateTime)Session["OutDate"]).ToString("yyyy-MM-dd"))
+    }
+    else
+    {
+        @Html.Hidden("inDate", ((DateTime)Session["inDate"]).ToString("yyyy-MM-dd"))
+        @Html.Hidden("outDate", ((DateTime)Session["outDate"]).ToString("yyyy-MM-dd"))
+    }
+
+    <div class="d-flex justify-content-center my-4">
+        <input type="submit" value="Conferma Prenotazione" class="custom-btn" />
+    </div>
+}

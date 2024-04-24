@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<link rel="stylesheet" href="~/Content/Home.min.css">
+
+@{
+    var today = DateTime.Today.ToString("yyyy-MM-dd");
+}
+<div class="container">
+    <div id="homeCarouselAutoplaying" class="carousel slide mb-4" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://images.unsplash.com/photo-1621293954908-907159247fc8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bHV4dXJ5JTIwaG90ZWx8ZW58MHx8MHx8fDI%3D" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bHV4dXJ5JTIwaG90ZWx8ZW58MHx8MHx8fDI%3D" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1573567199032-50a155ba6de1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHJpY2V2aW1lbnRvfGVufDB8fDB8fHwy" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="https://i.imgur.com/jZTOIj0.jpeg" class="d-block w-100" alt="...">
+            </div>
+        </div>
+    </div>
+
+    <h1 class="text-center mb-4">Benvenuti all'Oniro Luxury Boutique Hotel</h1>
+    <p class="text-center mb-4 fs-4">Un luogo dove le tue vacanze si trasformano in sogni</p>
+
+    <div class="wrapper">
+        @using (Html.BeginForm("SaveDates", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="custom-form mb-3">
+                <h2 class="text-center mb-4">Verifica Disponibilità</h2>
+                <p class="text-center mb-4 fs-4">Inserisci le date del tuo soggiorno e lasciati conquistare dalle nostre camere</p>
+                <div class="row align-items-center">
+                    <div class="col-md-4 mt-4">
+                        <label class="custom-label d-block fs-5">Data Check-In</label>
+                        <input type="date" id="checkInDate" name="inDate" class="custom-input form-control" required min="@today" placeholder="Data di arrivo" aria-label="Data di arrivo" aria-describedby="button-addon2">
+                    </div>
+                    <div class="col-md-4 mt-4">
+                        <label class="custom-label d-block fs-5">Data Check-Out</label>
+                        <input type="date" id="checkOutDate" name="outDate" class="custom-input form-control" required min="@today" placeholder="Data di partenza" aria-label="Data di partenza" aria-describedby="button-addon2">
+                    </div>
+                    <input type="submit" value="Cerca" class="custom-btn col-md-1" />
+                </div>
+            </div>
+
+            <div id="fidelity" class="custom-form mb-3">
+                <h2 class="text-center mb-2">Oniro Fidelity Program</h2>
+                <p class="text-center mb-4 fs-4">Scopri i vantaggi di prenotare direttamente dal nostro sito</p>
+                <p class="mb-2">Dopo la prima prenotazione online avrai diritto a:</p>
+                <ul class="mb-2">
+                    <li>10% di sconto sul totale della prenotazione</li>
+                    <li>Colazione inclusa</li>
+                    <li>Accesso alla piscina gratuito</li>
+                </ul>
+                <p class="mb-2">Dopo la seconda:</p>
+                <ul class="mb-2">
+                    <li>20% di sconto sul totale della prenotazione</li>
+                    <li>Colazione inclusa</li>
+                    <li>Accesso alla piscina gratuito</li>
+                    <li>Trattamento estetico a scelta gratuito</li>
+                </ul>
+                <p class="mb-2">Dopo la terza in poi:</p>
+                <ul class="mb-2">
+                    <li>30% di sconto sul totale della prenotazione</li>
+                    <li>Colazione inclusa</li>
+                    <li>Accesso alla piscina gratuito</li>
+                    <li>Luxury welcome kit in camera</li>
+                    <li>Trattamento chiropratico gratuito</li>
+                </ul>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    document.getElementById('checkInDate').addEventListener('change', function () {
+        var checkInDate = new Date(this.value);
+        document.getElementById('checkOutDate').min = this.value;
+
+        // Calcola la data che è 8 giorni dopo la data di arrivo
+        var maxDate = new Date(checkInDate.getFullYear(), checkInDate.getMonth(), checkInDate.getDate() + 8);
+        var maxDateString = maxDate.toISOString().split('T')[0];  // Converte la data in una stringa nel formato "YYYY-MM-DD"
+
+        document.getElementById('checkOutDate').max = maxDateString;
+    });
+</script>

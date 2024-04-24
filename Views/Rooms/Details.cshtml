@@ -1,0 +1,66 @@
+﻿@model OniroHotel.Models.Rooms
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<link rel="stylesheet" href="~/Content/Rooms.min.css">
+
+
+<div class="custom-form">
+<h2 class="text-center">Dettagli</h2>
+    <dl class="dl-horizontal">
+        <dt class="h4 fw-semibold mb-1">
+            @Html.DisplayNameFor(model => model.RoomNumber)
+        </dt>
+
+        <dd class="fw-semibold fs-5 mb-3">
+            @Html.DisplayFor(model => model.RoomNumber)
+        </dd>
+
+        <dt class="h3 fw-semibold mb-1">
+            @Html.DisplayNameFor(model => model.RoomName)
+        </dt>
+
+        <dd class="fw-semibold fs-5 mb-3">
+            @Html.DisplayFor(model => model.RoomName)
+        </dd>
+
+        <dt class="h3 fw-semibold mb-1">
+            @Html.DisplayNameFor(model => model.RoomImg)
+        </dt>
+
+        <dd class="fw-semibold fs-5 mb-3">
+            @Html.DisplayFor(model => model.RoomImg)
+        </dd>
+
+        <dt class="h3 fw-semibold mb-1">
+            @Html.DisplayNameFor(model => model.RoomDesc)
+        </dt>
+
+        <dd class="fw-semibold fs-5 mb-3">
+            @Html.DisplayFor(model => model.RoomDesc)
+        </dd>
+
+        <dt class="h3 fw-semibold mb-1">
+            @Html.DisplayNameFor(model => model.RoomPrice)
+        </dt>
+
+        <dd class="fw-semibold fs-5 mb-3">
+            @Html.DisplayFor(model => model.RoomPrice)
+        </dd>
+
+        <dt class="h3 fw-semibold mb-1">
+            @Html.DisplayNameFor(model => model.IsAvailable)
+        </dt>
+
+        <dd class="fw-semibold fs-5 mb-3">
+            @Html.DisplayFor(model => model.IsAvailable)
+        </dd>
+
+    </dl>
+</div>
+<div class="d-flex justify-content-center mt-2 mb-4">
+    @Html.ActionLink("Modifica", "Edit", new { id = Model.RoomID }, new { @class = "link custom-btn me-2 px-2"})
+    @Html.ActionLink("Torna alla lista", "GetRooms", null, new { @class = "link custom-btn px-2"})
+</div>

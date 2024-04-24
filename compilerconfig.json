@@ -1,0 +1,34 @@
+﻿[
+  {
+    "outputFile": "Content/Extras.css",
+    "inputFile": "Content/Extras.scss"
+  },
+  {
+    "outputFile": "Content/Rooms.css",
+    "inputFile": "Content/Rooms.scss"
+  },
+  {
+    "outputFile": "Content/Login.css",
+    "inputFile": "Content/Login.scss"
+  },
+  {
+    "outputFile": "Content/Forms.css",
+    "inputFile": "Content/Forms.scss"
+  },
+  {
+    "outputFile": "Content/About.css",
+    "inputFile": "Content/About.scss"
+  },
+  {
+    "outputFile": "Content/Home.css",
+    "inputFile": "Content/Home.scss"
+  },
+  {
+    "outputFile": "Content/Cart.css",
+    "inputFile": "Content/Cart.scss"
+  },
+  {
+    "outputFile": "Content/Contacts.css",
+    "inputFile": "Content/Contacts.scss"
+  }
+]

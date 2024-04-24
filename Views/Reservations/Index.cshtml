@@ -1,0 +1,66 @@
+﻿@model IEnumerable<OniroHotel.Models.Reservations>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-center my-4">Lista Prenotazioni</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Users.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OutDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Treatment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsValid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Guests)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Users.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OutDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Treatment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsValid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Guests)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ResID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ResID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ResID })
+        </td>
+    </tr>
+}
+
+</table>

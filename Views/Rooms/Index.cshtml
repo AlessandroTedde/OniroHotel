@@ -1,0 +1,79 @@
+﻿@model IEnumerable<OniroHotel.Models.Rooms>
+
+@{
+    ViewBag.Title = "Index";
+}
+<link rel="stylesheet" href="~/Content/Rooms.min.css">
+
+<h2>Camere Disponibili</h2>
+@{
+    var today = DateTime.Today.ToString("yyyy-MM-dd");
+}
+@using (Html.BeginForm("AvailableDateCheck", "Rooms", FormMethod.Post))
+{
+    <div class="custom-form mb-3">
+        <div class="row align-items-center">
+            <div class="col-md-4 mt-4">
+                <label class="custom-label d-block fs-5">Data Check-In</label>
+                <input type="date" id="checkInDate" name="checkInDate" class="custom-input form-control" value="@(((DateTime)ViewBag.inDate).ToString("yyyy-MM-dd"))" min="@today" placeholder="Data di arrivo" aria-label="Data di arrivo" aria-describedby="button-addon2">
+            </div>
+            <div class="col-md-4 mt-4">
+                <label class="custom-label d-block fs-5">Data Check-Out</label>
+                <input type="date" id="checkOutDate" name="checkOutDate" class="custom-input form-control" value="@(((DateTime)ViewBag.outDate).ToString("yyyy-MM-dd"))" min="@today" placeholder="Data di partenza" aria-label="Data di partenza" aria-describedby="button-addon2">
+            </div>
+                <input id="button-addon2" type="submit" value="Cerca" class="custom-btn col-md-1" />
+        </div>
+    </div>
+}
+
+@{
+    var differentRooms = Model.GroupBy(r => r.RoomName).Select(g => g.First()).ToList();
+}
+<div class="row">
+    @foreach (var item in differentRooms)
+     {
+        {
+            <div class="wrapper col-md-4 g-3">
+                <h1>@item.RoomName</h1>
+                <img src="@item.RoomImg" class="image" />
+                <div class="details">
+                    <h2>@item.RoomPrice€ / notte</h2>
+                </div>
+                @using (Html.BeginForm("AddRoom", "Cart", FormMethod.Post))
+                 {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("id", item.RoomID)
+
+                    if (Session["InDate"] != null & Session["OutDate"] != null)
+                    {
+                        @Html.Hidden("checkInDate", ((DateTime)Session["InDate"]).ToString("yyyy-MM-dd"))
+                        @Html.Hidden("checkOutDate", ((DateTime)Session["OutDate"]).ToString("yyyy-MM-dd"))
+                    }
+                    else
+                    {
+                        @Html.Hidden("checkInDate", ((DateTime)Session["inDate"]).ToString("yyyy-MM-dd"))
+                        @Html.Hidden("checkOutDate", ((DateTime)Session["outDate"]).ToString("yyyy-MM-dd"))
+                    }
+                    <input type="submit" value="Prenota Ora" class="custom-btn m-0 px-2" />
+                 }
+            </div>
+        }
+     }
+</div>
+    @if (ViewBag.Error != null)
+    {
+        <p>@ViewBag.Error</p>
+    }
+
+    <script>
+        document.getElementById('checkInDate').addEventListener('change', function () {
+            var checkInDate = new Date(this.value);
+            document.getElementById('checkOutDate').min = this.value;
+
+            // Calcola la data che è 8 giorni dopo la data di arrivo
+            var maxDate = new Date(checkInDate.getFullYear(), checkInDate.getMonth(), checkInDate.getDate() + 8);
+            var maxDateString = maxDate.toISOString().split('T')[0];  // Converte la data in una stringa nel formato "YYYY-MM-DD"
+
+            document.getElementById('checkOutDate').max = maxDateString;
+        });
+    </script>
