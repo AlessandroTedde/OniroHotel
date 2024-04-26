@@ -27,6 +27,7 @@ namespace OniroHotel.Models
 
         [Required]
         [StringLength(10)]
+        [Display(Name = "Ruolo Utente")]
         public string UserRole { get; set; }
 
         public short? Fidelity { get; set; }
@@ -37,10 +38,12 @@ namespace OniroHotel.Models
 
         [Required(ErrorMessage = "Nome obbligatorio.")]
         [StringLength(50)]
+        [Display(Name = "Nome")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Cognome obbligatorio.")]
         [StringLength(50)]
+        [Display(Name = "Cognome")]
         public string Surname { get; set; }
 
         [NotMapped]
@@ -51,7 +54,7 @@ namespace OniroHotel.Models
                 return Name + " " + Surname;
             }
         }
-
+        [Display(Name = "Telefono")]
         public long? Telephone { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -16,21 +16,24 @@ namespace OniroHotel.Models
 
         [Key]
         public int RoomID { get; set; }
-
+        [Display(Name = "Numero Camera")]
         public int RoomNumber { get; set; }
 
         [Required]
         [StringLength(50)]
+        [Display(Name = "Nome Camera")]
         public string RoomName { get; set; }
 
         [Required]
+        [Display(Name = "Immagine")]
         public string RoomImg { get; set; }
 
         [Required]
+        [Display(Name = "Descrizione")]
         public string RoomDesc { get; set; }
-
+        [Display(Name = "Prezzo")]
         public int RoomPrice { get; set; }
-
+        [Display(Name = "Disponibile")]
         public bool IsAvailable { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

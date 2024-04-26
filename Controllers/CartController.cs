@@ -30,6 +30,11 @@ namespace OniroHotel.Controllers
             cart.UserPhone = user.Telephone;
 
             cart.Extras = db.Extras.ToList();
+
+            if (cart.SelectedExtras == null)
+            {
+                cart.SelectedExtras = new List<Extras>();
+            }
             return View(cart);
         }
 
@@ -49,42 +54,7 @@ namespace OniroHotel.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddExtra(int id)
-        {
-            var extra = db.Extras.Find(id);
-            if (extra != null)
-            {
-                var cart = Session["Cart"] as CartViewModel ?? new CartViewModel();
-                if (cart.Extras == null)
-                {
-                    cart.Extras = new List<Extras>();
-                }
-                cart.Extras.Add(extra);
-                Session["Cart"] = cart;
-            }
-            return RedirectToAction("Cart");
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult RemoveExtra(int id)
-        {
-            var extra = db.Extras.Find(id);
-            if (extra != null)
-            {
-                var cart = Session["Cart"] as CartViewModel;
-                if (cart != null && cart.Extras != null)
-                {
-                    cart.Extras.Remove(extra);
-                    Session["Cart"] = cart;
-                }
-            }
-            return RedirectToAction("Cart");
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Confirm(DateTime inDate, DateTime outDate, string treatment, int guests)
+        public ActionResult Confirm(DateTime inDate, DateTime outDate, string treatment, int guests, int[] extraIds)
         {
             if (Session["InDate"] != null && Session["OutDate"] != null)
             {
@@ -114,9 +84,9 @@ namespace OniroHotel.Controllers
 
                 // Calcola il costo totale degli extra solo se ci sono extra nel carrello
                 int extrasTotal = 0;
-                if (cart.Extras != null && cart.Extras.Any())
+                if (cart.SelectedExtras != null && cart.SelectedExtras.Any())
                 {
-                    extrasTotal = cart.Extras.Sum(e => e.ExtraPrice);
+                    extrasTotal = cart.SelectedExtras.Sum(e => e.ExtraPrice);
                 }
 
                 int treatmentPrice = 0;
@@ -166,27 +136,50 @@ namespace OniroHotel.Controllers
                     Guests = guests
                 };
 
+                db.Reservations.Add(reservation);
+                db.SaveChanges(); // Salva la prenotazione nel database per ottenere un ResID valido
+
                 // Associa la stanza alla prenotazione
-                var reservationDetail = new ReservationDetails
+                var room = db.Rooms.Find(cart.Room.RoomID);
+                if (room != null)
                 {
-                    RoomID = cart.Room.RoomID,
-                    ResID = reservation.ResID
-                };
-                db.ReservationDetails.Add(reservationDetail);
+                    var reservationDetail = new ReservationDetails
+                    {
+                        RoomID = room.RoomID,
+                        ResID = reservation.ResID // Ora reservation.ResID ha un valore valido
+                    };
+                    db.ReservationDetails.Add(reservationDetail);
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("Room not found");
+                }
 
                 // Associa gli extra alla prenotazione
-                if (cart.Extras != null && cart.Extras.Any())
+                if (extraIds != null)
                 {
-                    foreach (var extra in cart.Extras)
+                    foreach (var id in extraIds)
                     {
-                        var reservationDetailExtra = new ReservationDetails
+
+                        var extra = db.Extras.Find(id);
+                        if (extra != null && !cart.SelectedExtras.Any(e => e.ExtraID == id)) // Controlla se l'extra è già nel carrello
                         {
-                            ExtraID = extra.ExtraID,
-                            ResID = reservation.ResID
-                        };
-                        db.ReservationDetails.Add(reservationDetailExtra);
+                            cart.SelectedExtras.Add(extra);
+                        }
+                        Session["Cart"] = cart;
+                        if (extra != null)
+                        {
+                            var reservationDetailExtra = new ReservationDetails
+                            {
+                                RoomID = cart.Room.RoomID, // Aggiungi il RoomID qui
+                                ExtraID = extra.ExtraID,
+                                ResID = reservation.ResID // Ora reservation.ResID ha un valore valido
+                            };
+                            db.ReservationDetails.Add(reservationDetailExtra);
+                        }
                     }
                 }
+                db.SaveChanges();
 
                 string stripePublishableKey = ConfigurationManager.AppSettings["Stripe:PublishableKey"];
                 string stripeSecretKey = ConfigurationManager.AppSettings["Stripe:SecretKey"];
@@ -202,11 +195,8 @@ namespace OniroHotel.Controllers
                     CustomerEmail = "alessandrotedde98@gmail.com"
                 };
 
-                string description = cart.Room.RoomName;
-                if (cart.Extras != null && cart.Extras.Count > 0)
-                {
-                    description += " + " + string.Join(", ", cart.Extras.Select(e => e.ExtraName));
-                }
+                string description = cart.Room.RoomName + " " + " dal " + inDate.ToString("dd/MM/yyyy") + " al " + outDate.ToString("dd/MM/yyyy");
+
                 var sessionLineItem = new SessionLineItemOptions
                 {
                     PriceData = new SessionLineItemPriceDataOptions
@@ -225,12 +215,31 @@ namespace OniroHotel.Controllers
 
                 Options.LineItems.Add(sessionLineItem);
 
+                foreach (var extra in cart.SelectedExtras)
+                {
+                    var extraLineItem = new SessionLineItemOptions
+                    {
+                        PriceData = new SessionLineItemPriceDataOptions
+                        {
+                            UnitAmount = (long)extra.ExtraPrice * 100,
+                            Currency = "eur",
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            {
+                                Name = extra.ExtraName,
+                                Images = new List<string> { extra.ExtraImg }
+                            }
+                        },
+                        Quantity = 1
+                    };
+
+                    Options.LineItems.Add(extraLineItem);
+                }
+
                 // creo la sessione di Stripe e la invio al client
                 var service = new SessionService();
                 Session session = service.Create(Options);
                 Response.Redirect(session.Url);
 
-                db.Reservations.Add(reservation);
                 db.SaveChanges();
                 // svuoto il carrello
                 Session.Remove("Cart");

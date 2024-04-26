@@ -3,8 +3,7 @@ body {
   background-image: linear-gradient(190deg, rgba(0, 0, 99, 0.05) 10%, rgba(0, 0, 255, 0.19) 100%);
   padding: 0;
   margin: 0;
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
   font-family: "Playfair Display", sans-serif;
   color: #5d1c00;
 }
@@ -22,6 +21,17 @@ body h2 {
   padding: 40px 35px 60px;
   box-sizing: border-box;
   border: 1px solid #edb74c;
+  box-shadow: inset 0 0 1px #272727;
+}
+
+.custom-form-delete {
+  position: relative;
+  width: 40em;
+  height: auto;
+  background: rgba(255, 0, 0, 0.5);
+  padding: 40px 35px 60px;
+  box-sizing: border-box;
+  border: 1px solid red;
   box-shadow: inset 0 0 1px #272727;
 }
 
@@ -58,4 +68,40 @@ body h2 {
 .custom-btn:hover {
   background: #ffce6e;
   color: white;
+}
+
+.navbar, .offcanvas, .modal-content {
+  background-color: #120c36;
+  color: #edb74c;
+  font-weight: 300;
+}
+
+.modal-content {
+  font-size: 1.2em;
+}
+
+.btn-close {
+  background-color: #edb74c;
+}
+
+.link {
+  font-size: 1.2em;
+  color: #edb74c;
+  text-decoration: none;
+  font-weight: 300;
+  padding-block-start: 3px;
+}
+
+.ui-datepicker {
+  background: white;
+  border: 1px solid #edb74c;
+  padding: 10px;
+}
+.ui-datepicker a {
+  text-decoration: none;
+  color: #5d1c00;
+  cursor: pointer;
+}
+.ui-datepicker span {
+  margin-inline-end: 10px;
 }

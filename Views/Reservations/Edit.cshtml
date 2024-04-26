@@ -3,85 +3,120 @@
 @{
     ViewBag.Title = "Edit";
 }
-
+<link rel="stylesheet" href="~/Content/Forms.min.css">
 
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h2>Modifica Prenotazione</h2>
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.ResID)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.UserID, "UserID", htmlAttributes: new { @class = "col-md-8 custom-label mt-4" })
-        <div class="col-md-10">
-            @Html.DropDownList("UserID", null, htmlAttributes: new { @class = "mt-2 col-md-10 custom-input" })
-            @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger d-block" })
+    <div class="custom-form">
+        <h2>Modifica Prenotazione</h2>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ResID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserID, "UserID", htmlAttributes: new { @class = "col-md-8 custom-label mt-4" })
+            <div class="col-md-10">
+                @Html.DropDownList("UserID", null, htmlAttributes: new { @class = "mt-2 col-md-10 custom-input" })
+                @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger d-block" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.InDate, htmlAttributes: new { @class = "col-md-8 custom-label mt-3" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.InDate, new { htmlAttributes = new { @class = "mt-2 col-md-10 custom-input" } })
-            @Html.ValidationMessageFor(model => model.InDate, "", new { @class = "text-danger d-block" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.InDate, htmlAttributes: new { @class = "col-md-8 custom-label mt-3" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.InDate, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "mt-2 col-md-10 custom-input datepicker" } })
+                @Html.ValidationMessageFor(model => model.InDate, "", new { @class = "text-danger d-block" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.OutDate, htmlAttributes: new { @class = "col-md-8 custom-label mt-3" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.OutDate, new { htmlAttributes = new { @class = "mt-2 col-md-10 custom-input" } })
-            @Html.ValidationMessageFor(model => model.OutDate, "", new { @class = "text-danger d-block" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.OutDate, htmlAttributes: new { @class = "col-md-8 custom-label mt-3" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.OutDate, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "mt-2 col-md-10 custom-input datepicker" } })
+                @Html.ValidationMessageFor(model => model.OutDate, "", new { @class = "text-danger d-block" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Treatment, htmlAttributes: new { @class = "col-md-8 custom-label mt-3" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Treatment, new { htmlAttributes = new { @class = "mt-2 col-md-10 custom-input" } })
-            @Html.ValidationMessageFor(model => model.Treatment, "", new { @class = "text-danger d-block" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Treatment, htmlAttributes: new { @class = "col-md-8 custom-label mt-3" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Treatment, new { htmlAttributes = new { @class = "mt-2 col-md-10 custom-input" } })
+                @Html.ValidationMessageFor(model => model.Treatment, "", new { @class = "text-danger d-block" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "col-md-8 custom-label mt-3" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "mt-2 col-md-10 custom-input" } })
-            @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger d-block" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "col-md-8 custom-label mt-3" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "mt-2 col-md-10 custom-input" } })
+                @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger d-block" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.IsValid, htmlAttributes: new { @class = "col-md-8 custom-label mt-3" })
-        <div class="col-md-10">
-            <div class="checkbox">
-                @Html.EditorFor(model => model.IsValid)
-                @Html.ValidationMessageFor(model => model.IsValid, "", new { @class = "text-danger d-block" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsValid, htmlAttributes: new { @class = "col-md-8 custom-label mt-3" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.IsValid)
+                    @Html.ValidationMessageFor(model => model.IsValid, "", new { @class = "text-danger d-block" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Guests, htmlAttributes: new { @class = "col-md-8 custom-label mt-3" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Guests, new { htmlAttributes = new { @class = "mt-2 col-md-10 custom-input" } })
+                @Html.ValidationMessageFor(model => model.Guests, "", new { @class = "text-danger d-block" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-5">
+                <input type="submit" value="Save" class="custom-btn mt-3" />
             </div>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Guests, htmlAttributes: new { @class = "col-md-8 custom-label mt-3" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Guests, new { htmlAttributes = new { @class = "mt-2 col-md-10 custom-input" } })
-            @Html.ValidationMessageFor(model => model.Guests, "", new { @class = "text-danger d-block" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-5">
-            <input type="submit" value="Save" class="custom-btn mt-3" />
-        </div>
-    </div>
-</div>
 }
+<script>
+    $(function () {
+        $(".datepicker").datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateText) {
+                this.value = moment(dateText, "DD/MM/YYYY").format("YYYY-MM-DD");
+            }
+        });
+    });
+
+    $(function () {
+        $.validator.methods.date = function (value, element) {
+            return this.optional(element) || moment(value, "YYYY-MM-DD", true).isValid();
+        }
+    });
+</script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/moment.js")
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: 'dd/mm/yy',
+                onSelect: function (dateText) {
+                    this.value = moment(dateText, "DD/MM/YYYY").format("YYYY-MM-DD");
+                }
+            });
+        });
+
+        $(function () {
+            $.validator.methods.date = function (value, element) {
+                return this.optional(element) || moment(value, "YYYY-MM-DD", true).isValid();
+            }
+        });
+    </script>
+}
 }

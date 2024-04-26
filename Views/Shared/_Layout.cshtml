@@ -28,6 +28,7 @@
                             @Html.ActionLink("Verifica Disponibilità", "Index", "Rooms", new { area = "" }, new { @class = "nav-link fs-2 my-4" })
                             @Html.ActionLink("Spa", "Spa", "About", new { area = "" }, new { @class = "nav-link fs-2 mb-4" })
                             @Html.ActionLink("Ristorante", "Restaurant", "About", new { area = "" }, new { @class = "nav-link fs-2 mb-4" })
+                            @Html.ActionLink("Chi Siamo", "Info", "About", new { area = "" }, new { @class = "nav-link fs-2 mb-4" })
                             @Html.ActionLink("Contatti", "Contacts", "About", new { area = "" }, new { @class = "nav-link fs-2 mb-4" })
                             @if (Session["UserRole"] != null && Session["UserRole"].ToString() != "HotelGuest")
                             {

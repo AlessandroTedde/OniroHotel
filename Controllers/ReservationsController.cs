@@ -120,6 +120,22 @@ namespace OniroHotel.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public ActionResult SetInvalid(int id)
+        {
+            Reservations reservation = db.Reservations.Find(id);
+            if (reservation == null)
+            {
+                return HttpNotFound();
+            }
+
+            reservation.IsValid = false;
+            db.Entry(reservation).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

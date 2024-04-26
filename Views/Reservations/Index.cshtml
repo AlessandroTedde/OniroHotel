@@ -3,64 +3,60 @@
 @{
     ViewBag.Title = "Index";
 }
+<link rel="stylesheet" href="~/Content/Rooms.min.css">
 
 <h2 class="text-center my-4">Lista Prenotazioni</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Users.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.InDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OutDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Treatment)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Total)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsValid)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Guests)
-        </th>
-        <th></th>
-    </tr>
-
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Users.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.InDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OutDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Treatment)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Total)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsValid)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Guests)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ResID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ResID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ResID })
-        </td>
-    </tr>
+    <div class="@(item.IsValid ? "custom-form" : "custom-form-delete") mb-3">
+        <h4>Intestatario</h4>
+        <p>@Html.DisplayFor(modelItem => item.UserID)</p>
+        <h4>Data Check-in</h4>
+        <p>@Html.DisplayFor(modelItem => item.InDate)</p>
+        <h4>Data Check-out</h4>
+        <p>@Html.DisplayFor(modelItem => item.OutDate)</p>
+        <h4>Trattamento</h4>
+        <p>@Html.DisplayFor(modelItem => item.Treatment)</p>
+        <h4>Prezzo Totale</h4>
+        <p>@Html.DisplayFor(modelItem => item.Total)</p>
+        <h4>Valida</h4>
+        <p>@Html.DisplayFor(modelItem => item.IsValid)</p>
+        <h4>Ospiti</h4>
+        <p>@Html.DisplayFor(modelItem => item.Guests)</p>
+        <div class="d-flex justify-content-center">
+            @Html.ActionLink("Modifica", "Edit", new { id = item.ResID }, new { @class = "link custom-btn m-1 px-2" })
+            @Html.ActionLink("Dettagli", "Details", new { id = item.ResID }, new { @class = "link custom-btn m-1 px-2" })
+            <button type="button" class="custom-btn m-1 px-2 delete-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-id="@item.ResID">
+                Elimina
+            </button>
+        </div>
+    </div>
 }
 
-</table>
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Elimina Prenotazione</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Sei davvero sicuro di voler eliminare questa prenotazione?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a id="deleteLink" class="btn btn-danger">Elimina</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('.delete-btn').on('click', function() {
+            var resId = $(this).data('id');
+            var url = '@Url.Action("SetInvalid", "Reservations")' + '?id=' + resId;
+            $('#deleteLink').attr('href', url);
+        });
+    });
+</script>

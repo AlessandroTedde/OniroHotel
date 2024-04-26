@@ -3,54 +3,53 @@
 @{
     ViewBag.Title = "Edit";
 }
+<link rel="stylesheet" href="~/Content/Forms.min.css">
 
-<h2>Edit</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+    <h2>Modifica Camera</h2>
     <div class="form-horizontal">
-        <h4>Rooms</h4>
-        <hr />
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.RoomID)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RoomNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.RoomNumber, htmlAttributes: new { @class = "col-md-8 custom-label mt-4" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.RoomNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RoomNumber, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.RoomNumber, new { htmlAttributes = new { @class = "mt-2 col-md-10 custom-input" } })
+                @Html.ValidationMessageFor(model => model.RoomNumber, "", new { @class = "text-danger d-block" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RoomName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.RoomName, htmlAttributes: new { @class = "col-md-8 custom-label mt-4" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.RoomName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RoomName, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.RoomName, new { htmlAttributes = new { @class = "mt-2 col-md-10 custom-input" } })
+                @Html.ValidationMessageFor(model => model.RoomName, "", new { @class = "text-danger d-block" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RoomImg, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.RoomImg, htmlAttributes: new { @class = "col-md-8 custom-label mt-4" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.RoomImg, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RoomImg, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.RoomImg, new { htmlAttributes = new { @class = "mt-2 col-md-10 custom-input" } })
+                @Html.ValidationMessageFor(model => model.RoomImg, "", new { @class = "text-danger d-block" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RoomDesc, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.RoomDesc, htmlAttributes: new { @class = "col-md-8 custom-label mt-4" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.RoomDesc, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RoomDesc, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.RoomDesc, new { htmlAttributes = new { @class = "mt-2 col-md-10 custom-input" } })
+                @Html.ValidationMessageFor(model => model.RoomDesc, "", new { @class = "text-danger d-block" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RoomPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.RoomPrice, htmlAttributes: new { @class = "col-md-8 custom-label mt-4" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.RoomPrice, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.RoomPrice, "", new { @class = "text-danger" })
@@ -58,7 +57,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IsAvailable, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IsAvailable, htmlAttributes: new { @class = "col-md-8 custom-label mt-4" })
             <div class="col-md-10">
                 <div class="checkbox">
                     @Html.EditorFor(model => model.IsAvailable)
@@ -68,16 +67,12 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="col-md-5">
+                <input type="submit" value="Save" class="custom-btn px-2" />
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

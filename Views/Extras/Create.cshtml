@@ -3,8 +3,7 @@
 @{
     ViewBag.Title = "Create";
 }
-
-<h2>Create</h2>
+<link rel="stylesheet" href="~/Content/Forms.min.css">
 
 
 @using (Html.BeginForm()) 
@@ -12,44 +11,39 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Extras</h4>
-        <hr />
+        <h2>Crea Extra</h2>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.ExtraName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ExtraName, htmlAttributes: new { @class = "col-md-8 custom-label mt-4" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ExtraName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ExtraName, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.ExtraName, new { htmlAttributes = new { @class = "mt-2 col-md-10 custom-input" } })
+                @Html.ValidationMessageFor(model => model.ExtraName, "", new { @class = "text-danger d-block" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ExtraImg, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ExtraImg, htmlAttributes: new { @class = "col-md-8 custom-label mt-4" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ExtraImg, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ExtraImg, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.ExtraImg, new { htmlAttributes = new { @class = "mt-2 col-md-10 custom-input" } })
+                @Html.ValidationMessageFor(model => model.ExtraImg, "", new { @class = "text-danger d-block" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ExtraPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ExtraPrice, htmlAttributes: new { @class = "col-md-8 custom-label mt-4" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ExtraPrice, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ExtraPrice, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.ExtraPrice, new { htmlAttributes = new { @class = "mt-2 col-md-10 custom-input" } })
+                @Html.ValidationMessageFor(model => model.ExtraPrice, "", new { @class = "text-danger d-block" })
             </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="col-md-5">
+                <input type="submit" value="Create" class="custom-btn mt-3" />
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
