@@ -4,9 +4,8 @@ using Stripe.Checkout;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity;
 using System.Linq;
-using System.Reflection;
-using System.Web;
 using System.Web.Mvc;
 
 namespace OniroHotel.Controllers
@@ -133,11 +132,19 @@ namespace OniroHotel.Controllers
                     OutDate = outDate,
                     Treatment = treatment,
                     Total = total,
-                    Guests = guests
+                    Guests = guests,
+                    IsValid = true
                 };
 
                 db.Reservations.Add(reservation);
                 db.SaveChanges(); // Salva la prenotazione nel database per ottenere un ResID valido
+
+                if (user.UserRole == "HotelGuest" && user.Fidelity < 3)
+                {
+                    user.Fidelity += 1;
+                    db.Entry(user).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
 
                 // Associa la stanza alla prenotazione
                 var room = db.Rooms.Find(cart.Room.RoomID);
@@ -243,6 +250,8 @@ namespace OniroHotel.Controllers
                 db.SaveChanges();
                 // svuoto il carrello
                 Session.Remove("Cart");
+
+                TempData["SuccessMessage"] = "Prenotazione effettuata con successo!";
 
                 // reindirizzo alla pagina di successo
                 return RedirectToAction("Index", "Home");

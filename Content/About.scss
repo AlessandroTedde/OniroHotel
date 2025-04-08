@@ -16,10 +16,10 @@ body {
     }
 }
 
-.wrapper-b {
+.wrapper-a, .wrapper-b {
     display: flex;
     justify-content: space-between;
-    align-items: end;
+    align-items: center;
     color: #5d1c00;
     margin-bottom: 10em;
 
@@ -29,57 +29,22 @@ body {
     }
 
     p {
-        font-size: 1.3em;
+        font-size: 1.5em;
     }
 
-    @media (max-width: 991px) {
-        flex-direction: column-reverse;
+    @media (max-width: 767px) {
+        flex-direction: column;
         align-items: center;
         text-align: center;
 
         img {
             margin-bottom: 2em;
             width: 100%;
-            height: 510px;
+            height: 400px;
         }
     }
 
-    @media (min-width: 1400px) {
-        p {
-            width: 40rem;
-        }
-    }
-
-    @media (min-width: 1200px) {
-        p {
-            width: 30rem;
-        }
-    }
-
-    @media (min-width: 992px) {
-        p {
-            width: 20rem;
-        }
-    }
-}
-
-.wrapper-t {
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-    color: #5d1c00;
-    margin-bottom: 10em;
-
-    img {
-        height: 700px;
-        width: 500px;
-    }
-
-    p {
-        font-size: 1.3em;
-    }
-
-    @media (max-width: 991px) {
+    @media (min-width: 768px) and (max-width: 991px) {
         flex-direction: column;
         align-items: center;
         text-align: center;
@@ -91,21 +56,66 @@ body {
         }
     }
 
+    @media (min-width: 992px) and (max-width: 1199px) {
+        p {
+            width: 26rem;
+        }
+    }
+
+    @media (min-width: 1200px) and (max-width: 1399px) {
+        p {
+            width: 36rem;
+        }
+    }
+
     @media (min-width: 1400px) {
         p {
-            width: 40rem;
+            width: 43rem;
+        }
+    }
+}
+
+.wrapper-b {
+
+    @media (max-width: 767px) {
+        flex-direction: column-reverse;
+        align-items: center;
+        text-align: center;
+
+        img {
+            margin-bottom: 2em;
+            width: 100%;
+            height: 400px;
         }
     }
 
-    @media (min-width: 1200px) {
-        p {
-            width: 30rem;
+    @media (min-width: 768px) and (max-width: 991px) {
+        flex-direction: column-reverse;
+        align-items: center;
+        text-align: center;
+
+        img {
+            margin-bottom: 2em;
+            width: 100%;
+            height: 510px;
         }
     }
 
-    @media (min-width: 992px) {
+    @media (min-width: 992px) and (max-width: 1199px) {
         p {
-            width: 20rem;
+            width: 26rem;
+        }
+    }
+
+    @media (min-width: 1200px) and (max-width: 1399px) {
+        p {
+            width: 36rem;
+        }
+    }
+
+    @media (min-width: 1400px) {
+        p {
+            width: 43rem;
         }
     }
 }
